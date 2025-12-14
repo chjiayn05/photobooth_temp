@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Photos</title>
+    
+    <style>
+        body {
+            background-color: #fbf3d5;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            /* display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            width: 100vh;
+            margin: 0 auto; */
+            display: grid;
+            /* 將可用空間平均分成 1 + 1 + 1 = 3 份 */
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
+            justify-items: center;
+        }
+        .grid-container {
+            background-color: white;  
+            padding: 20px; 
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 180px; 
+            margin: 20px auto;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .photo-slot {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background-color: #eee;
+            border: 2px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.2s;
+            box-sizing: border-box;
+        }
+        .photo-slot:hover {
+            background-color: #ddd;
+            border-color: #888;
+        }
+
+        .photo-slot.has-photo {
+            border: none;
+        }
+        .photo-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        .slot-text {
+            color: #aaa;
+            font-size: 24px;
+            font-weight: bold;
+            pointer-events: none; 
+        }
+        h1 { 
+            margin-top: 10px;
+            letter-spacing: 2px; 
+            color: #333;
+        }
+        button {
+            background-color: #9cafaa;
+            color: #333;
+            cursor: pointer;
+            border: none;
+            border-radius: 30px;
+            padding: 15px; 
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.2s;
+            width: 100px;
+        }
+        button:hover { 
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Choose 4 photos!</h1>
+
+        <div class="grid-container">
+            <div class="photo-slot" onclick="triggerUpload(1)" id="slot1">
+                <span class="slot-text" id="text1">1</span>
+                <img id="img1">
+            </div>
+            <div class="photo-slot" onclick="triggerUpload(2)" id="slot2">
+                <span class="slot-text" id="text2">2</span>
+                <img id="img2">
+            </div>
+            <div class="photo-slot" onclick="triggerUpload(3)" id="slot3">
+                <span class="slot-text" id="text3">3</span>
+                <img id="img3">
+            </div>
+            <div class="photo-slot" onclick="triggerUpload(4)" id="slot4">
+                <span class="slot-text" id="text4">4</span>
+                <img id="img4">
+            </div>
+        </div>
+
+        <input type="file" id="hiddenInput" accept="image/*" style="display: none;">
+
+        <button onclick="mergeAndGo()" id="nextBtn">Done</button>
+    </div>
+
+    <script>
+        let currentSlot = 0; 
+
+        function triggerUpload(slotIndex) {
+            currentSlot = slotIndex;
+            document.getElementById('hiddenInput').click();
+        }
+
+        document.getElementById('hiddenInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = document.getElementById('img' + currentSlot);
+                const text = document.getElementById('text' + currentSlot);
+                const slot = document.getElementById('slot' + currentSlot);
+
+                img.src = event.target.result;
+                img.style.display = 'block';
+                text.style.display = 'none';
+                
+                slot.classList.add('has-photo');
+            };
+            reader.readAsDataURL(file);
+            e.target.value = '';
+        });
+
+        function mergeAndGo() {
+            const img1 = document.getElementById('img1');
+            const img2 = document.getElementById('img2');
+            const img3 = document.getElementById('img3');
+            const img4 = document.getElementById('img4');
+
+            if (img1.style.display === 'none' || img2.style.display === 'none' || 
+                img3.style.display === 'none' || img4.style.display === 'none') {
+                if(!confirm("You haven't selected enough photos yet! Are you sure you want to merge them? (Blank spaces will turn white)")) {
+                    return;
+                }
+            }
+
+            const finalCanvas = document.createElement('canvas');
+            const ctx = finalCanvas.getContext('2d');
+            
+            const w = 640; 
+            const h = 480;
+            const gap = 50;
+
+            finalCanvas.width = w + (gap * 2);      // 740
+            finalCanvas.height = (h * 4) + (gap * 5); // 2170
+
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
+
+            const xPos = gap;
+
+            if(img1.src) ctx.drawImage(img1, xPos, gap, w, h);
+            if(img2.src) ctx.drawImage(img2, xPos, gap + h + gap, w, h);
+            if(img3.src) ctx.drawImage(img3, xPos, gap + h + gap + h + gap, w, h);
+            if(img4.src) ctx.drawImage(img4, xPos, gap + h + gap + h + gap + h + gap, w, h);
+
+            try {
+                const resultURL = finalCanvas.toDataURL('image/jpeg', 0.9);
+                localStorage.setItem('photoToEdit', resultURL);
+                window.location.href = 'edit.html';
+            } catch (error) {
+                console.error("Failed to save to local storage!", error);
+            }
+        }
+    </script>
+</body>
+</html>

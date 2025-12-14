@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Booth Gallery</title>
+    <style>
+        body {
+            background-color: #fbf3d5;
+            text-align: center;
+        }
+        h1 {
+            font-size: 32px;
+            margin-bottom: 35px;
+            margin-top: 35px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 35px;
+        }
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .photo-card {
+            background: #d6dac8;
+            /* 加一個細細的灰框，才不會跟背景混在一起 */
+            border: 1px solid #ddd; 
+            padding: 10px;
+            box-shadow: 5px 5px 0px #9cafaa;
+            transition: transform 0.2s;
+        }
+        .photo-card:hover {
+            transform: translateY(-5px);
+            border-color: white;
+        }
+        .photo-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .photo-info {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #333;
+            font-family: monospace;
+        }
+        .btn-home {
+            text-decoration: none;
+            background-color: #9cafaa;
+            color: #333;
+            cursor: pointer;
+            border: none;
+            border-radius: 30px;
+            padding: 15px 50px; 
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.2s;
+            margin-top: 10px;
+        }
+        .btn-home:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+        #loading { margin-top: 50px; color: #888; }
+    </style>
+</head>
+<body>
+
+    <h1>GALLERY</h1>
+    <br>
+    <button class="btn-home" onclick="window.location.href = 'index.html';">回到首頁</button>
+
+    <div id="gallery" class="gallery-container"></div>
+    
+    <div id="loading">Loading...</div>
+
+    <script>
+        window.addEventListener("load", async function(){
+            const galleryDiv = document.getElementById('gallery');
+            const loadingText = document.getElementById('loading');
+
+            try {
+                const response = await fetch('/api/photos');
+                const photos = await response.json();
+
+                loadingText.style.display = 'none';
+
+                if (photos.length === 0) {
+                    galleryDiv.innerHTML = '<p style="grid-column: 1/-1;">No photo now.</p>';
+                    return;
+                }
+
+                photos.forEach(photo => {
+                    const card = document.createElement('div');
+                    card.className = 'photo-card';
+
+                    const img = document.createElement('img');
+                    img.src = photo.image_data;
+                    img.loading = "lazy";
+
+                    const info = document.createElement('div');
+                    info.className = 'photo-info';
+                    info.innerText = photo.timestamp;
+
+                    card.appendChild(img);
+                    card.appendChild(info);
+                    galleryDiv.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error("Error:", error);
+                loadingText.innerText = "Load Failed";
+            }
+        });
+    </script>
+</body>
+</html>
