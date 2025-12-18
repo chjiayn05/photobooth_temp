@@ -1,0 +1,57 @@
+@font-face {
+    font-family: "riitnr";
+    src: url("riitnr/RiiTN_R.otf") format("opentype");
+}
+
+body {
+    background-color: #FBF3D5;
+    margin: 0;
+}
+
+h1 {
+    font-family: "riitnr";
+    font-size: 50px;
+    text-align: center;
+    /*background-color: white;*/
+}
+
+.button1 {
+    color: white;
+    background-color: darksalmon;
+    border-color: darksalmon;
+}
+
+.button2 {
+    color: white;
+    background-color: darksalmon;
+    border-color: darksalmon;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+}
+
+.btn button {
+    margin: 0 30px;
+    width: 20%;
+    font-size: 40px;
+    padding: 40px 20px;
+    border-radius: 16px;
+}
+
+.icon-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+    background-color: white;
+}
+
+.icon-circle img {
+    width: 100px;
+    height: 100px;
+}
