@@ -4,18 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Photos</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+
     <style>
         body { 
             text-align: center;
             background-color: #fbf3d5;
-            padding: 20px; 
+            padding: 20px;
+            font-family: "Roboto Slab", serif;
         }
         h1 {
             margin-bottom: 30px;
             color: #333;
-            letter-spacing: 2px; 
+            letter-spacing: 3px; 
         }
-
         .main-container {
             display: flex; 
             justify-content: center;
@@ -48,7 +53,7 @@
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             margin-bottom: 20px;
-            border: 2px solid #eee;  /* 加上細邊框 */
+            border: 2px solid #eee;
             text-align: center;
         }
         h3 {
@@ -58,15 +63,17 @@
             border-bottom: 2px solid #f0f0f0;
             padding-bottom: 10px;
             margin-bottom: 15px;
+            letter-spacing: 1px;
         }
         .btn-group {
             display: flex;
+            justify-content: center;
             gap: 10px;
             flex-wrap: wrap;
             margin-bottom: 20px;
         }
         .btn-group button {
-            flex: 1;                 /* 按鈕平均分配寬度 */
+            flex: 1;
             padding: 10px 5px;
             border: 1px solid #ccc;
             background: #fff;
@@ -127,6 +134,44 @@
             border-color: #ccc;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        .sticker-controls {
+            margin-top:10px;
+            display: inline-flex;
+            justify-content: space-evenly;
+            text-align: center;
+        }
+        input[type=range] {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 10px;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            height: 8px;
+            background: #d6dac8;
+            border-radius: 4px;
+            width: 200px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            margin-top: -3px;
+            height: 14px;
+            width: 14px;
+            background: #9cafaa;
+            border-radius: 100%;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .deleteStickerBtn{
+            background:#d6a99d;
+            color:#333;
+            cursor: pointer;
+            border: none;
+            border-radius: 30px;
+            width: 75px;
+            height: 25px;
+        }
     </style>
 </head>
 <body>
@@ -141,16 +186,16 @@
             <div class="panel">
                 <h3>Filter</h3>
                 <div class="btn-group">
-                    <button onclick="setFilter('none')">original</button>
-                    <button onclick="setFilter('grayscale')">grayscale</button>
-                    <button onclick="setFilter('sepia')">sepia</button>
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFilter('none')">original</button>
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFilter('grayscale')">grayscale</button>
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFilter('sepia')">sepia</button>
                 </div>
                 
                 <h3>Frame</h3>
                 <div class="btn-group">
-                    <button onclick="setFrame('brown')">brown</button>
-                    <button onclick="setFrame('gray')">gray</button>
-                    <button onclick="setFrame('black')">black</button>
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('brown')">brown</button>
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('gray')">gray</button>
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('black')">black</button>
                 </div>
 
                 <h3>Sticker</h3>
@@ -162,11 +207,16 @@
                         <img src="assets\stickers\planet-earth.png" onclick="addSticker(this.src)">
                     </div>
                 </div>
+                <div id="sticker-controls" class="sticker-controls" style="display:none; margin-top:10px;">
+                    <label style="color: #333; display: flex; align-items: center;">Size: <input type="range" id="scaleRange" min="0.5" max="3.5" step="0.1" value="2"></label>
+                    <label style="color: #333; display: flex; align-items: center;">Rotate: <input type="range" id="rotateRange" min="-180" max="180" step="5" value="0"></label>
+                    <button class="deleteStickerBtn" style="font-family: 'Roboto Slab', serif;" onclick="deleteCurrentSticker()">Delete</button>
+                </div>
             </div>
                 
             <div class="action">
-                <button onclick="downloadImage()" class="btn-success">Download Image</button>
-                <button onclick="uploadToGallery()" class="btn-share">Upload to Gallery</button>
+                <button style="font-family: 'Roboto Slab', serif;" onclick="downloadImage()" class="btn-success">Download Image</button>
+                <button style="font-family: 'Roboto Slab', serif;" onclick="uploadToGallery()" class="btn-share">Upload to Gallery</button>
             </div>
         </div>
     </div>
@@ -216,45 +266,47 @@
         function addSticker(src) {
             const img = new Image();
             img.src = src;
-            img.crossOrigin = "Anonymous"; // 防止跨域問題
             img.addEventListener("load", function(){
                 stickers.push({
                     img: img,
-                    x: canvas.width / 2 - 50,
-                    y: canvas.height / 2 - 50,
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
                     width: 100,
-                    height: 100
+                    height: 100,
+                    scale: 2,
+                    rotation: 0
                 });
                 render();
             });
         }
 
+        function deleteCurrentSticker() {
+            if (currentStickerIndex !== null) {
+                stickers.splice(currentStickerIndex, 1);
+                currentStickerIndex = null; // 清空選取
+                document.getElementById('sticker-controls').style.display = 'none'; 
+                render();
+            }
+        }
+
         function render() {
-            ctx.drawImage(originalImage, 0, 0);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             //Filter
-            if (currentFilter !== 'none') { 
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                const data = imageData.data;
-
-                for (let i = 0; i < data.length; i += 4) {
-                    const r = data[i];
-                    const g = data[i + 1];
-                    const b = data[i + 2];
-
-                    if (currentFilter === 'grayscale') {
-                        const avg = (r + g + b) / 3;
-                        data[i] = avg; 
-                        data[i+1] = avg; 
-                        data[i+2] = avg;
-                    } else if (currentFilter === 'sepia') {
-                        data[i] = r * 0.393 + g * 0.769 + b * 0.189;
-                        data[i+1] = r * 0.349 + g * 0.686 + b * 0.168;
-                        data[i+2] = r * 0.272 + g * 0.534 + b * 0.131;
-                    }
-                }
-                ctx.putImageData(imageData, 0, 0);
+            if (currentFilter === 'grayscale') {
+                ctx.filter = 'grayscale(100%)';
+            } else if (currentFilter === 'sepia') {
+                ctx.filter = 'sepia(100%)';
+            } else if (currentFilter === 'blur') {
+                ctx.filter = 'blur(5px)';
+            } else if (currentFilter === 'invert') {
+                ctx.filter = 'invert(100%)';
+            } else {
+                ctx.filter = 'none';
             }
+
+            ctx.drawImage(originalImage, 0, 0);
+            ctx.filter = 'none';
 
             const w = canvas.width;
             const h = canvas.height;
@@ -285,18 +337,19 @@
                     ctx.stroke();
                     y += 530;
                 }
-
-                ctx.fillStyle = "white";
-                ctx.font = "bold 30px Courier New";
-                ctx.textAlign = "center";
-                ctx.fillText("PHOTO BOOTH 2025", w / 2, h - 15);
             }
 
             stickers.forEach(s => {
-                ctx.drawImage(s.img, s.x, s.y, s.width, s.height);
+                ctx.save();
+                ctx.translate(s.x, s.y);
+                ctx.rotate(s.rotation * Math.PI / 180);
+                ctx.scale(s.scale, s.scale);
+                ctx.drawImage(s.img, -s.width/2, -s.height/2, s.width, s.height);
+                ctx.restore();
             });
         }
 
+        // 滑鼠
         function initMouseEvents() {
             // 校正滑鼠座標
             function getMousePos(evt) {
@@ -310,8 +363,13 @@
             }
 
             function isMouseInSticker(pos, sticker) {
-                return pos.x > sticker.x && pos.x < sticker.x + sticker.width &&
-                       pos.y > sticker.y && pos.y < sticker.y + sticker.height;
+                const halfWidth = (sticker.width * sticker.scale) / 2; // 考慮縮放
+                const halfHeight = (sticker.height * sticker.scale) / 2;
+                
+                return pos.x > sticker.x - halfWidth && 
+                        pos.x < sticker.x + halfWidth &&
+                        pos.y > sticker.y - halfHeight && 
+                        pos.y < sticker.y + halfHeight;
             }
 
             canvas.addEventListener("mousedown", function(e){
@@ -322,8 +380,36 @@
                         currentStickerIndex = i;
                         dragStartX = mousePos.x - stickers[i].x;
                         dragStartY = mousePos.y - stickers[i].y;
+                        document.getElementById('sticker-controls').style.display = 'flex';
+                        document.getElementById('scaleRange').value = stickers[i].scale;
+                        document.getElementById('rotateRange').value = stickers[i].rotation;
                         return;
                     }
+                }
+
+                currentStickerIndex = null;
+                document.getElementById('sticker-controls').style.display = 'none';
+            });
+
+            document.addEventListener("mousedown", function(e){
+                // 檢查點擊目標是否在 canvas 或 sticker-controls 裡面
+                if (e.target !== canvas && !document.getElementById('sticker-controls').contains(e.target)) {
+                    currentStickerIndex = null;
+                    document.getElementById('sticker-controls').style.display = 'none';
+                }
+            });
+
+            document.getElementById('scaleRange').addEventListener('input', function(e){
+                if(currentStickerIndex !== null){
+                    stickers[currentStickerIndex].scale = parseFloat(e.target.value);
+                    render();
+                }
+            });
+
+            document.getElementById('rotateRange').addEventListener('input', function(e){
+                if(currentStickerIndex !== null){
+                    stickers[currentStickerIndex].rotation = parseInt(e.target.value);
+                    render();
                 }
             });
 
@@ -333,26 +419,24 @@
                 const mousePos = getMousePos(e);
                 const sticker = stickers[currentStickerIndex];
                 
-                let newX = mousePos.x - dragStartX;
-                let newY = mousePos.y - dragStartY;
+                sticker.x = mousePos.x - dragStartX;
+                sticker.y = mousePos.y - dragStartY;
 
-                newX = Math.max(0, Math.min(canvas.width - sticker.width, newX));
-                newY = Math.max(0, Math.min(canvas.height - sticker.height, newY));
-                
-                sticker.x = newX;
-                sticker.y = newY;
+                const halfW = (sticker.width * sticker.scale) / 2;
+                const halfH = (sticker.height * sticker.scale) / 2;
+
+                sticker.x = Math.max(halfW, Math.min(canvas.width - halfW, sticker.x));
+                sticker.y = Math.max(halfH, Math.min(canvas.height - halfH, sticker.y));
                 
                 render();
             });
 
             canvas.addEventListener("mouseup", function(){
                 isDragging = false;
-                currentStickerIndex = null;
             });
 
             canvas.addEventListener("mouseout", function(){
                 isDragging = false;
-                currentStickerIndex = null;
             });
         }
 
@@ -372,6 +456,8 @@
             btn.innerHTML = "Uploading...";
             btn.disabled = true;
 
+            const user_description = window.prompt("Add some description about this photo:");
+
             const imageData = canvas.toDataURL('image/jpeg', 0.9);
             const timestamp = new Date().toLocaleDateString();
 
@@ -382,7 +468,8 @@
                 },
                 body: JSON.stringify({
                     image: imageData,
-                    time: timestamp
+                    time: timestamp,
+                    user_description: description
                 })
             })
 
@@ -391,8 +478,8 @@
                 console.log('Successfully uploaded to Gallery:', data);
                 alert("Posted successfully! Taking you to the gallery to see it!");
                 window.location.href = 'gallery.html';
-                btn.innerText = "Uploaded!";
-                btn.disabled = true;
+                btn.innerText = originalText;
+                btn.disabled = false;
             })
             .catch((error) => {
                 console.error('Error:', error);

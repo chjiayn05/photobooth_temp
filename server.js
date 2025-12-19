@@ -28,6 +28,9 @@ const photoSchema = new mongoose.Schema({
     createdAt: { 
         type: Date, 
         default: Date.now 
+    },
+    description: {
+      type: String,
     }
 });
 
@@ -45,7 +48,8 @@ app.get('/api/photos', async(req, res) => {
 app.post('/api/upload', async(req, res) => {
   const newPhoto = new Photo({
       image_data: req.body.image,
-      timestamp: req.body.time
+      timestamp: req.body.time,
+      description: req.body.user_description
     });
   
   try {

@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Take Photos</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+
     <style>
         body { 
             text-align: center; 
@@ -35,6 +40,7 @@
             height: 120px;
         }
         button {
+            font-family: "Roboto Slab", serif;
             background-color: #9cafaa;
             color: #333;
             cursor: pointer;
@@ -45,6 +51,9 @@
             font-weight: bold;
             transition: 0.2s;
             margin-top: 10px;
+            width: 155px;
+            height: 55px;
+            letter-spacing: 1.5px;
         }
         button:hover { 
             opacity: 0.8;
@@ -56,6 +65,7 @@
             opacity: 0.8;
         }
         video , .photo{
+            border-radius: 5px; 
             transform: scaleX(-1);
         }
     </style>
@@ -154,7 +164,6 @@
         });
 
         function mergePhotos() {
-            console.log("開始合成照片");
 
             const c1 = document.getElementById('photo1');
             const c2 = document.getElementById('photo2');
@@ -171,13 +180,17 @@
             finalCanvas.width = w + (gap * 2);
             finalCanvas.height = (h * 4) + (gap * 5);
 
+            ctx.translate(finalCanvas.width, 0);
+            ctx.scale(-1, 1);
+
             ctx.fillStyle = "white";
             ctx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
 
             const x = gap;
 
             ctx.drawImage(c1, x, gap, w, h);
-            ctx.drawImage(c2, x, gap + h + gap, w, h);  ctx.drawImage(c3, x, gap + h + gap + h + gap, w, h);
+            ctx.drawImage(c2, x, gap + h + gap, w, h);  
+            ctx.drawImage(c3, x, gap + h + gap + h + gap, w, h);
             ctx.drawImage(c4, x, gap + h + gap + h + gap + h + gap, w, h);
 
             try {

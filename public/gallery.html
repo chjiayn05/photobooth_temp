@@ -4,10 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Booth Gallery</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+
     <style>
         body {
             background-color: #fbf3d5;
             text-align: center;
+            font-family: "Roboto Slab", serif;
         }
         h1 {
             font-size: 32px;
@@ -15,6 +21,7 @@
             margin-top: 35px;
             border-bottom: 2px solid #333;
             padding-bottom: 35px;
+            letter-spacing: 3px;
         }
         .gallery-container {
             display: grid;
@@ -23,10 +30,8 @@
             max-width: 1200px;
             margin: 40px auto;
         }
-
         .photo-card {
             background: #d6dac8;
-            /* 加一個細細的灰框，才不會跟背景混在一起 */
             border: 1px solid #ddd; 
             padding: 10px;
             box-shadow: 5px 5px 0px #9cafaa;
@@ -59,6 +64,7 @@
             font-weight: bold;
             transition: 0.2s;
             margin-top: 10px;
+            font-family: "Roboto Slab", serif;
         }
         .btn-home:hover {
             opacity: 0.8;
@@ -71,7 +77,7 @@
 
     <h1>GALLERY</h1>
     <br>
-    <button class="btn-home" onclick="window.location.href = 'index.html';">回到首頁</button>
+    <button class="btn-home" onclick="window.location.href = 'index.html';">Home</button>
 
     <div id="gallery" class="gallery-container"></div>
     
@@ -99,7 +105,6 @@
 
                     const img = document.createElement('img');
                     img.src = photo.image_data;
-                    img.loading = "lazy";
 
                     const info = document.createElement('div');
                     info.className = 'photo-info';
