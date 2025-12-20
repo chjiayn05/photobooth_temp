@@ -196,6 +196,10 @@
                     <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('brown')">brown</button>
                     <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('gray')">gray</button>
                     <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('black')">black</button>
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('assets/frame/frame_christmas.png')">christmas</button>
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('assets/frame/frame_ocean.png')">ocean</button>
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('assets/frame/frame_circus.png')">circus</button>
+                    
                 </div>
 
                 <h3>Sticker</h3>
@@ -230,6 +234,10 @@
         let currentFilter = 'none'; 
         let currentFrame = 'none';
         let stickers = []; 
+
+        // frame
+        let frameImage = new Image();
+        let showFrameImage = false;
         
         // drag
         let isDragging = false;
@@ -258,8 +266,15 @@
             render();
         }
 
-        function setFrame(type) {
-            currentFrame = type;
+        function setFrame(typeOrPath) {
+            if (typeOrPath.includes('.png')){
+                showFrameImage = true;
+                frameImage.src = typeOrPath;
+                frameImage.onload = render;
+            } else {
+                currentFrame = typeOrPath;
+                showFrameImage = false;
+            }
             render();
         }
 
@@ -312,39 +327,45 @@
             const h = canvas.height;
 
             // Frame
-            if (currentFrame === 'brown') {
-                drawInsetBorder("#744700");
-                
-            } else if (currentFrame === 'gray') {
-                drawInsetBorder("#ccc");
+            if (showFrameImage){
+                ctx.drawImage(frameImage, 0, 0, canvas.width, canvas.height);
+            } else {
+                if (currentFrame === 'brown') {
+                    drawInsetBorder("#744700");
+                    
+                } else if (currentFrame === 'gray') {
+                    drawInsetBorder("#ccc");
 
-            } else if (currentFrame === 'black') {
-                drawInsetBorder("#111");
+                } else if (currentFrame === 'black') {
+                    drawInsetBorder("#111");
+                }
+                
+                function drawInsetBorder(color) {
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 50;
+                    
+                    const offset = 25;
+                    ctx.strokeRect(offset, offset, w - 50, h - 50);
+
+                    let y = 555;
+                    for (let i = 1; i < 4; i++) {
+                        ctx.beginPath();
+                        ctx.moveTo(0, y); 
+                        ctx.lineTo(w, y);
+                        ctx.stroke();
+                        y += 530;
+                    }
+                    for (let i = 1; i < 10; i++) {  
+                        ctx.beginPath();
+                        ctx.moveTo(0, y); 
+                        ctx.lineTo(w, y);
+                        ctx.stroke();
+                        y += 50;
+                    }
+                }
             }
+
             
-            function drawInsetBorder(color) {
-                ctx.strokeStyle = color;
-                ctx.lineWidth = 50;
-                
-                const offset = 25;
-                ctx.strokeRect(offset, offset, w - 50, h - 50);
-
-                let y = 555;
-                for (let i = 1; i < 4; i++) {
-                    ctx.beginPath();
-                    ctx.moveTo(0, y); 
-                    ctx.lineTo(w, y);
-                    ctx.stroke();
-                    y += 530;
-                }
-                for (let i = 1; i < 10; i++) {  
-                    ctx.beginPath();
-                    ctx.moveTo(0, y); 
-                    ctx.lineTo(w, y);
-                    ctx.stroke();
-                    y += 50;
-                }
-            }
 
             stickers.forEach(s => {
                 ctx.save();
