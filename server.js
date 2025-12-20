@@ -49,7 +49,7 @@ app.post('/api/upload', async(req, res) => {
   const newPhoto = new Photo({
       image_data: req.body.image,
       timestamp: req.body.time,
-      description: req.body.user_description
+      description: req.body.description
     });
   
   try {

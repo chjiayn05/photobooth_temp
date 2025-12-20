@@ -337,6 +337,13 @@
                     ctx.stroke();
                     y += 530;
                 }
+                for (let i = 1; i < 10; i++) {  
+                    ctx.beginPath();
+                    ctx.moveTo(0, y); 
+                    ctx.lineTo(w, y);
+                    ctx.stroke();
+                    y += 50;
+                }
             }
 
             stickers.forEach(s => {
@@ -456,7 +463,7 @@
             btn.innerHTML = "Uploading...";
             btn.disabled = true;
 
-            const user_description = window.prompt("Add some description about this photo:");
+            const description = window.prompt("Add some description about this photo:");
 
             const imageData = canvas.toDataURL('image/jpeg', 0.9);
             const timestamp = new Date().toLocaleDateString();
@@ -469,7 +476,7 @@
                 body: JSON.stringify({
                     image: imageData,
                     time: timestamp,
-                    user_description: description
+                    description: description
                 })
             })
 

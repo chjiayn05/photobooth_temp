@@ -193,9 +193,10 @@
             const w = 640; 
             const h = 480;
             const gap = 50;
+            const footHeight = 450;
 
             finalCanvas.width = w + (gap * 2);      // 740
-            finalCanvas.height = (h * 4) + (gap * 5); // 2170
+            finalCanvas.height = (h * 4) + (gap * 5) + footHeight; // 2170
 
             ctx.fillStyle = "white";
             ctx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);

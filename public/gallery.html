@@ -71,6 +71,71 @@
             transform: scale(1.05);
         }
         #loading { margin-top: 50px; color: #888; }
+        .modal-overlay{
+            display: none;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .post-container{
+            background: #fbf3d5;
+            display: flex;
+            width: 900px;
+            height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+        }
+        .post-image{
+            flex: 2;
+            background: #d6dac8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .post-image img{
+            height: 95%;
+        }
+        .post-content{
+            flex: 1;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .post-header {
+            border-bottom: 2px solid #9cafaa;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #555;
+        }
+        .post-desc {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+            white-space: pre-wrap; /* 保留換行 */
+        }
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+        }
+        .close-btn:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
@@ -80,14 +145,33 @@
     <button class="btn-home" onclick="window.location.href = 'index.html';">Home</button>
 
     <div id="gallery" class="gallery-container"></div>
-    
     <div id="loading">Loading...</div>
 
-    <script>
-        window.addEventListener("load", async function(){
-            const galleryDiv = document.getElementById('gallery');
-            const loadingText = document.getElementById('loading');
+    <div class="modal-overlay" id="postModal" onclick="closeModal(event)">
+        <span class="close-btn" id="close-btn" onclick="closeModal(event)">×</span>
 
+        <div class="post-container">    
+            <div class="post-image">
+                <img id="modalImg" src="">
+            </div>
+
+            <div class="post-content">
+                <div class="post-header" id="modalDate"></div>
+                <div class="post-desc" id="modalDesc"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const galleryDiv = document.getElementById('gallery');
+        const loadingText = document.getElementById('loading');
+        const modal = document.getElementById('postModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalDate = document.getElementById('modalDate');
+        const modalDesc = document.getElementById('modalDesc');
+        const closeBtn = document.getElementById('close-btn');
+
+        window.addEventListener("load", async function(){
             try {
                 const response = await fetch('/api/photos');
                 const photos = await response.json();
@@ -113,6 +197,10 @@
                     card.appendChild(img);
                     card.appendChild(info);
                     galleryDiv.appendChild(card);
+
+                    card.addEventListener("click", function(){
+                        openModal(photo);
+                    });
                 });
 
             } catch (error) {
@@ -120,6 +208,24 @@
                 loadingText.innerText = "Load Failed";
             }
         });
+
+        function openModal(photoData){
+            modalImg.src = photoData.image_data;
+            modalDate.innerHTML = photoData.timestamp;
+
+            if (photoData.description){
+                modalDesc.innerHTML = photoData.description;
+            } else {
+                modalDesc.innerHTML = "No description provided."
+                modalDesc.style.color = "#888";
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        function closeModal(e){
+            if (e.target === modal || e.target === closeBtn) modal.style.display = 'none';
+        }
     </script>
 </body>
 </html>

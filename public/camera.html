@@ -176,9 +176,10 @@
             const w = 640; 
             const h = 480;
             const gap = 50;
+            const footHeight = 450;
 
             finalCanvas.width = w + (gap * 2);
-            finalCanvas.height = (h * 4) + (gap * 5);
+            finalCanvas.height = (h * 4) + (gap * 5) + footHeight;
 
             ctx.translate(finalCanvas.width, 0);
             ctx.scale(-1, 1);
