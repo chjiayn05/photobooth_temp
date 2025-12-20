@@ -199,7 +199,7 @@
                     <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('assets/frame/frame_christmas.png')">christmas</button>
                     <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('assets/frame/frame_ocean.png')">ocean</button>
                     <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('assets/frame/frame_circus.png')">circus</button>
-                    
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('assets/frame/frame_camera.png')">camera</button>                    
                 </div>
 
                 <h3>Sticker</h3>
@@ -331,13 +331,13 @@
                 ctx.drawImage(frameImage, 0, 0, canvas.width, canvas.height);
             } else {
                 if (currentFrame === 'brown') {
-                    drawInsetBorder("#744700");
+                    drawInsetBorder("#642100");
                     
                 } else if (currentFrame === 'gray') {
-                    drawInsetBorder("#ccc");
+                    drawInsetBorder("#7B7B7B");
 
                 } else if (currentFrame === 'black') {
-                    drawInsetBorder("#111");
+                    drawInsetBorder("#000000");
                 }
                 
                 function drawInsetBorder(color) {
