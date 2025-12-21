@@ -32,7 +32,7 @@ h1 {
     width: 360px;
     height: 1px;
     background-color: rgba(0, 0, 0, 0.5);
-    margin: 30px auto;
+    margin: 20px auto;
 }
 
 .subtitle {
@@ -65,12 +65,12 @@ h1 {
 }
 
 .glass {
-    background: rgba(255, 255, 255, 0.80);
+    background: rgba(255, 255, 255, 0.70);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    padding: 60px 100%;
+    padding: 50px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
-    border-radius: 50px;
+    justify-content: center;
     text-align: center;
 }
 
