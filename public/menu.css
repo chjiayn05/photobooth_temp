@@ -6,7 +6,6 @@ body {
     background-color: #FBF3D5;
     margin: 0;
     min-height: 100vh;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,9 +19,11 @@ body {
 }
 
 h1 {
-    font-family: "RiiTN_R";
+    font-family: "riitnr";
     font-size: 36px;
-    margin-bottom: 40px;
+    margin-bottom: 80px;
+    letter-spacing: 0.15em;
+    color: #4A4A4A;
 }
 
 .btn {
@@ -33,13 +34,18 @@ h1 {
 
 .btn button {
     width: 260px;
-    font-size: 32px;
+    font-size: 30px;
     padding: 30px 20px;
     border-radius: 16px;
     border: none;
     cursor: pointer;
-    background-color: darksalmon;
-    color: white;
+    background-color: #9C8F84;
+    color: #ffffff;
+}
+
+button:hover {
+    background-color: #A99D93;
+    transform: translateY(-1px);
 }
 
 .icon-circle {
