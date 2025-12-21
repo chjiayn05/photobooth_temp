@@ -195,14 +195,19 @@
                 
                 <h3>Frame</h3>
                 <div class="btn-group">
-                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('brown')">brown</button>
-                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('gray')">gray</button>
-                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('black')">black</button>
+                    <button style="font-family: 'Roboto Slab', serif; color: #642100;" onclick="setFrame('brown')">brown</button>
+                    <button style="font-family: 'Roboto Slab', serif; color: #7b7b7b;" onclick="setFrame('gray')">gray</button>
+                    <button style="font-family: 'Roboto Slab', serif; color: #000000;" onclick="setFrame('black')">black</button>
+                    <button style="font-family: 'Roboto Slab', serif; color: #02F78E;" onclick="setFrame('green')">green</button>
+                    <button style="font-family: 'Roboto Slab', serif; color: #FF79BC;" onclick="setFrame('pink')">pink</button>
+                    
+                </div>
+                <div class="btn-group">
                     <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('assets/frame/frame_christmas.png')">christmas</button>
                     <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('assets/frame/frame_ocean.png')">ocean</button>
                     <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('assets/frame/frame_circus.png')">circus</button>
                     <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('assets/frame/frame_camera.png')">camera</button>  
-                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('assets/frame/frame_2026.png')">2026</button>                    
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('assets/frame/frame_2026.png')">2026</button>
                 </div>
 
                 <h3>Sticker</h3>
@@ -316,7 +321,7 @@
             } else if (currentFilter === 'sepia') {
                 ctx.filter = 'sepia(100%)';
             } else if (currentFilter === 'blur') {
-                ctx.filter = 'blur(5px)';
+                ctx.filter = 'blur(3px)';
             } else if (currentFilter === 'invert') {
                 ctx.filter = 'invert(100%)';
             } else {
@@ -335,12 +340,14 @@
             } else {
                 if (currentFrame === 'brown') {
                     drawInsetBorder("#642100");
-                    
                 } else if (currentFrame === 'gray') {
                     drawInsetBorder("#7B7B7B");
-
                 } else if (currentFrame === 'black') {
                     drawInsetBorder("#000000");
+                } else if (currentFrame === 'green') {
+                    drawInsetBorder("#BBFFBB");
+                } else if (currentFrame === 'pink') {
+                    drawInsetBorder("#FF79BC");
                 }
                 
                 function drawInsetBorder(color) {
