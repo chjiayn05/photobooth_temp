@@ -225,11 +225,12 @@
                 
                 <h3>Frame</h3>
                 <div class="btn-group">
-                    <button style="font-family: 'Roboto Slab', serif; color: #642100;" onclick="setFrame('brown')">brown</button>
-                    <button style="font-family: 'Roboto Slab', serif; color: #7b7b7b;" onclick="setFrame('gray')">gray</button>
-                    <button style="font-family: 'Roboto Slab', serif; color: #000000;" onclick="setFrame('black')">black</button>
-                    <button style="font-family: 'Roboto Slab', serif; color: #02F78E;" onclick="setFrame('green')">green</button>
-                    <button style="font-family: 'Roboto Slab', serif; color: #FF79BC;" onclick="setFrame('pink')">pink</button>
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('white')">white</button>
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('brown')">brown</button>
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('gray')">gray</button>
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('black')">black</button>
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('green')">green</button>
+                    <button style="font-family: 'Roboto Slab', serif;" onclick="setFrame('pink')">pink</button>
                     
                 </div>
                 <div class="btn-group">
@@ -290,7 +291,7 @@
         
         let originalImage = new Image();
         let currentFilter = 'none'; 
-        let currentFrame = 'none';
+        let currentFrame = 'white';
         let stickers = []; 
 
         // frame
@@ -535,7 +536,9 @@
             if (showFrameImage){
                 ctx.drawImage(frameImage, 0, 0, canvas.width, canvas.height);
             } else {
-                if (currentFrame === 'brown') {
+                if (currentFrame === 'white') {
+                    drawInsetBorder("white");
+                } else if (currentFrame === 'brown') {
                     drawInsetBorder("#642100");
                 } else if (currentFrame === 'gray') {
                     drawInsetBorder("#7B7B7B");
