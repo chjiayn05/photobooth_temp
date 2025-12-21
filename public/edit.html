@@ -24,11 +24,10 @@
         .main-container {
             display: flex; 
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             gap: 80px;
-            max-width: 1200px;
+            max-width: 100vh;
             margin: 0 auto;
-            flex-wrap: wrap;
         }
         .canvas-container {
             display: flex;
@@ -88,10 +87,12 @@
         .action {
             margin-top: 40px;
             display: flex;
-            gap: 15px;
+            gap: 50px;
             justify-content: space-evenly;
+            flex-direction: column;
         }
         .action button {
+            width: 200px;
             padding: 18px;
             font-size: 16px;
             border: none;
@@ -195,7 +196,7 @@
 
         .nav-item.active {
             background: #f2f2f2;
-            box-shadow: 0 4px 10px gray;
+            box-shadow: 0 2px 4px gray;
             transform: translateY(-2px);
         }
 
@@ -276,11 +277,11 @@
                     <button class="deleteStickerBtn" style="font-family: 'Roboto Slab', serif;" onclick="deleteCurrentSticker()">Delete</button>
                 </div>
             </div>
-                
-            <div class="action">
+        </div>
+
+        <div class="action">
                 <button style="font-family: 'Roboto Slab', serif;" onclick="downloadImage()" class="btn-success">Download Image</button>
                 <button style="font-family: 'Roboto Slab', serif;" onclick="uploadToGallery()" class="btn-share">Upload to Gallery</button>
-            </div>
         </div>
     </div>
     
@@ -576,8 +577,6 @@
                     }
                 }
             }
-
-            
 
             stickers.forEach(s => {
                 ctx.save();
