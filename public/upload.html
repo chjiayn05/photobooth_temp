@@ -30,7 +30,7 @@
             flex-direction: column;
             gap: 20px;
             width: 180px; 
-            margin: 20px auto;
+            margin: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
         .photo-slot {
@@ -92,6 +92,19 @@
             transform: scale(1.05);
         }
 
+        @media(max-width: 540px){
+            .container{
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            h1{
+                width: 100%;
+            }
+            button{
+                margin-left: 10px;
+            }
+        }
     </style>
 </head>
 <body>

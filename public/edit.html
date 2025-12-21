@@ -200,6 +200,69 @@
             transform: translateY(-2px);
         }
 
+
+        @media(max-width: 540px) {
+        .main-container {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        canvas {
+            max-width: 100%;
+            max-height: 50vh;
+            height: auto !important;
+        }
+
+        .controls {
+            width: 100%;
+        }
+
+        /* .panel {
+            padding: 15px;
+        } */
+
+        .sticker-nav {
+            overflow-x: auto;
+            white-space: nowrap;
+            justify-content: flex-start;
+            padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-item {
+            flex: 0 0 auto;
+            width: 70px;
+        }
+
+        .sticker-group {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .sticker-group img {
+            width: 100%;
+            height: auto;
+        }
+
+        .action {
+            flex-direction: row; /* 手機上按鈕並排比較節省空間 */
+            gap: 50px;
+            margin-top: 20px;
+        }
+
+        .action button {
+            width: 200px;
+            font-size: 14px;
+            padding: 12px 5px;
+        }
+
+        .sticker-controls {
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+    }
     </style>
 </head>
 <body>

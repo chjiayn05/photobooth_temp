@@ -10,6 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
 
     <style>
+        h1 {
+            color: #333;
+            letter-spacing: 3px; 
+        }
         body { 
             text-align: center; 
             background-color: #fbf3d5; 
@@ -18,7 +22,6 @@
             display: flex;
             justify-content: center;
             gap: 60px;
-            margin-top: 80px;
         }
         .photo-grid{
             display: flex;
@@ -68,10 +71,26 @@
             border-radius: 5px; 
             transform: scaleX(-1);
         }
+
+        @media(max-width: 540px){
+            .container{
+                flex-wrap: wrap;
+                gap: 30px;
+            }
+            .photo-grid{
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            button{
+                margin-top: 20px;
+            }
+        }
     </style>
 </head>
 <body>
-    
+    <h1>Take Photos!</h1>
+
     <div class="container">
         <div class="camera-box">
             <video id="myVideo" width="640" height="480" style="width: 400px; height: 300px;" autoplay playsinline></video>
