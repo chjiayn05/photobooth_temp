@@ -170,8 +170,27 @@
             const ctx = currentCanvas.getContext('2d');
             const curVideo = videoList[currentPhotoIndex];
             const nextVideo = videoList[currentPhotoIndex + 1];
-            
-            ctx.drawImage(videoElement, 0, 0, currentCanvas.width, currentCanvas.height);
+
+            const imgRatio = videoElement.videoWidth / videoElement.videoHeight;
+            const targetRatio = currentCanvas.width / currentCanvas.height;
+
+            let sourceX, sourceY, sourceW, sourceH;
+
+            // 更寬
+            if (imgRatio > targetRatio) {
+                sourceH = videoElement.videoHeight;
+                sourceW = sourceH * targetRatio;
+                sourceX = (videoElement.videoWidth - sourceW) / 2;
+                sourceY = 0;
+            //更高
+            } else {
+                sourceW = videoElement.videoWidth;
+                sourceH = sourceW / targetRatio;
+                sourceX = 0;
+                sourceY = (videoElement.videoHeight - sourceH) / 2;
+            }
+
+            ctx.drawImage(videoElement, sourceX, sourceY, sourceW, sourceH, 0, 0, currentCanvas.width, currentCanvas.height);
 
             if (currentCanvas) currentCanvas.style.display = 'block';
             if (curVideo) curVideo.style.display = 'none';
