@@ -11,7 +11,7 @@ app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb', extended: true}));
 
 app.use(express.static('public'));
-
+  
 mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log('Connect to MongoDB Altas'))
   .catch((error) => console.error('Failed to connect to MongoDB Altas'));
