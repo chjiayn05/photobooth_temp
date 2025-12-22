@@ -53,6 +53,8 @@ h1 {
     cursor: pointer;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
     width: auto;
+    font-family: "RiiTN_R", "Georgia", serif;
+    letter-spacing: 2px;
 }
 
 .btn:hover {
@@ -72,5 +74,42 @@ h1 {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
     justify-content: center;
     text-align: center;
+    margin: 20px;
 }
 
+.gallery-btn{
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+    background: linear-gradient(180deg, #9cafaa, #9C8F84);
+    padding: 20px;
+    border-radius: 30px;
+    font-family: "RiiTN_R";
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.gallery-btn:hover{
+    transform: scale(1.05);
+    transition: 0.2s;
+}
+
+.gallery-btn img{
+    width: 40px;
+    height: auto;
+}
+
+@media (max-width:540px) {
+    /* body{
+        gap: 80px;
+    } */
+    .gallery-btn{
+        position: relative;
+        right: auto;
+        bottom: auto;
+    }
+}
