@@ -39,6 +39,7 @@
             padding: 10px;
             box-shadow: 5px 5px 0px #9cafaa;
             transition: transform 0.2s;
+            cursor: pointer;
         }
         .photo-card:hover {
             transform: translateY(-5px);
@@ -110,7 +111,7 @@
         .post-content{
             font-family: "Roboto Slab", "Noto Serif TC", serif;
             flex: 1;
-            padding: 25px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
@@ -129,17 +130,18 @@
             white-space: pre-wrap; /* 保留換行 */
         }
         .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
             font-size: 30px;
             cursor: pointer;
-            color: white;
+            color: #333;
             width: 40px;
             height: 40px;
             line-height: 40px;
         }
         .close-btn:hover { opacity: 0.8; }
+        .close-btn-container{
+            display: flex;
+            justify-content: end;
+        }
     </style>
 </head>
 <body>
@@ -152,7 +154,7 @@
     <div id="loading">Loading...</div>
 
     <div class="modal-overlay" id="postModal" onclick="closeModal(event)">
-        <span class="close-btn" id="close-btn" onclick="closeModal(event)">×</span>
+        
 
         <div class="post-container">    
             <div class="post-image">
@@ -160,6 +162,9 @@
             </div>
 
             <div class="post-content">
+                <div class="close-btn-container">
+                    <span class="close-btn" id="close-btn" onclick="closeModal(event)">×</span>
+                </div>
                 <div class="post-header" id="modalDate"></div>
                 <div class="post-desc" id="modalDesc"></div>
             </div>
