@@ -193,6 +193,11 @@
             const img3 = document.getElementById('img3');
             const img4 = document.getElementById('img4');
 
+            if(!img1.src || !img2.src || !img3.src || !img4.src){
+                alert("Please select all 4 photos!");
+                return;
+            }
+
             if (img1.style.display === 'none' || img2.style.display === 'none' || 
                 img3.style.display === 'none' || img4.style.display === 'none') {
                 if(!confirm("You haven't selected enough photos yet! Are you sure you want to merge them? (Blank spaces will turn white)")) {
