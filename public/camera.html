@@ -14,7 +14,7 @@
             color: #333;
             letter-spacing: 3px; 
         }
-        body { 
+        body {
             text-align: center; 
             font-family: "Roboto Slab", serif;
             background-color: #fbf3d5; 
@@ -42,6 +42,9 @@
             background-color: #d6dac8;
             width: 160px;
             height: 120px;
+            position: relative;
+            display: flex;
+            align-items: center;
         }
         button {
             font-family: "Roboto Slab", serif;
@@ -71,6 +74,15 @@
             border-radius: 5px; 
             transform: scaleX(-1);
             object-fit: cover;
+        }
+        .retake1pic{
+            width: 75px;
+            height: 25px;
+            font-size: 15px;
+            position: absolute;
+            left: 100%;
+            margin-left: 50px;
+
         }
 
         @media(max-width: 540px){
@@ -103,18 +115,22 @@
             <div class="photo-box">
                 <video id="myVideo1" width="640" height="480" style="width: 160px; height: 120px; display: none;" autoplay playsinline></video>
                 <canvas class="photo" id="photo1" width="640" height="480" style="width: 160px; height: 120px; display: none;"></canvas>
+                <button id="retakepic1" class="retake1pic" style="display: none;">retake</button>
             </div>
             <div class="photo-box">
                 <video id="myVideo2" width="640" height="480" style="width: 160px; height: 120px; display: none;" autoplay playsinline></video>
                 <canvas class="photo" id="photo2" width="640" height="480" style="width: 160px; height: 120px; display: none;"></canvas>
+                <button id="retakepic2" class="retake1pic" style="display: none;">retake</button>
             </div>
             <div class="photo-box">
                 <video id="myVideo3" width="640" height="480" style="width: 160px; height: 120px; display: none;" autoplay playsinline></video>
                 <canvas class="photo" id="photo3" width="640" height="480" style="width: 160px; height: 120px; display: none;"></canvas>
+                <button id="retakepic3" class="retake1pic" style="display: none;">retake</button>
             </div>
             <div class="photo-box">
                 <video id="myVideo4" width="640" height="480" style="width: 160px; height: 120px; display: none;" autoplay playsinline></video>
                 <canvas class="photo" id="photo4" width="640" height="480" style="width: 160px; height: 120px; display: none;"></canvas>
+                <button id="retakepic4" class="retake1pic" style="display: none;">retake</button>
             </div>
         </div>
     </div>
@@ -122,8 +138,8 @@
     <button id="snapBtn">SNAP!</button>
 
     <div id="action-buttons" style="display: none; margin-top: 20px;">
-        <button id="retakeBtn" onclick="retake()" style="background-color: #d6a99d; color: #333;">retake</button>
-        <button id="editBtn" onclick="goToEdit()" style="background-color: #d6dac8; color: #333;">edit</button>
+        <button id="retakeBtn" onclick="retake()" style="background-color: #d6a99d; color: #333; margin: 20px;">retake all</button>
+        <button id="editBtn" onclick="goToEdit()" style="background-color: #d6dac8; color: #333; margin: 20px;">edit</button>
     </div>
 
     <script>
@@ -141,6 +157,13 @@
             document.getElementById('photo3'),
             document.getElementById('photo4')
         ];
+        const retakeList = [
+            document.getElementById('retakepic1'),
+            document.getElementById('retakepic2'),
+            document.getElementById('retakepic3'),
+            document.getElementById('retakepic4')
+        ];
+
         let currentPhotoIndex = 0;
 
         window.addEventListener('load', async () => {
@@ -165,7 +188,7 @@
             }
         });
 
-        snapBtn.addEventListener('click', () =>{
+        function takePhoto (){
             const currentCanvas = canvasList[currentPhotoIndex];
             const ctx = currentCanvas.getContext('2d');
             const curVideo = videoList[currentPhotoIndex];
@@ -192,9 +215,12 @@
 
             ctx.drawImage(videoElement, sourceX, sourceY, sourceW, sourceH, 0, 0, currentCanvas.width, currentCanvas.height);
 
+            
             if (currentCanvas) currentCanvas.style.display = 'block';
             if (curVideo) curVideo.style.display = 'none';
             if (nextVideo) nextVideo.style.display = 'block';
+            if (currentPhotoIndex-1 >= 0) retakeList[currentPhotoIndex-1].style.display = 'none';
+            retakeList[currentPhotoIndex].style.display = 'block';
 
             currentPhotoIndex++;
 
@@ -202,7 +228,27 @@
                 snapBtn.style.display = 'none'; 
                 document.getElementById('action-buttons').style.display = 'block';
             }
-        });
+        }
+        snapBtn.addEventListener('click', takePhoto);
+
+        retakeList[0].addEventListener("click", retake1pic);
+        retakeList[1].addEventListener("click", retake1pic);
+        retakeList[2].addEventListener("click", retake1pic);
+        retakeList[3].addEventListener("click", retake1pic);
+
+        function retake1pic() {
+            console.log(currentPhotoIndex);
+            if (currentPhotoIndex <= 3) videoList[currentPhotoIndex].style.display = 'none';
+            canvasList[currentPhotoIndex-1].style.display = 'none';
+            videoList[currentPhotoIndex-1].style.display = 'block';
+            retakeList[currentPhotoIndex-1].style.display = 'none';
+            if (currentPhotoIndex >= 2) retakeList[currentPhotoIndex-2].style.display = 'block';
+            if (currentPhotoIndex == 4){
+                snapBtn.style.display = 'inline-block'; 
+                document.getElementById('action-buttons').style.display = 'none';
+            }
+            currentPhotoIndex -= 1;
+        }
 
         function mergePhotos() {
 
@@ -246,6 +292,7 @@
         }
 
         function retake() {
+            retakeList[3].style.display = 'none';
             currentPhotoIndex = 0;
 
             canvasList.forEach(canvas => {

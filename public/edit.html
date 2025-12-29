@@ -51,7 +51,7 @@
             padding: 25px;
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
+            /* margin-bottom: 20px; */
             border: 2px solid #eee;
             text-align: center;
         }
@@ -137,7 +137,7 @@
         }
         .sticker-controls {
             margin-top:10px;
-            display: inline-flex;
+            display: flex;
             justify-content: space-evenly;
             text-align: center;
         }
@@ -216,10 +216,6 @@
         .controls {
             width: 100%;
         }
-
-        /* .panel {
-            padding: 15px;
-        } */
 
         .sticker-nav {
             overflow-x: auto;
@@ -334,7 +330,7 @@
                     <div class="sticker-group" id="stickerGroup"></div>
                 </div>
                 
-                <div id="sticker-controls" class="sticker-controls" style="display:none; margin-top:10px;">
+                <div id="sticker-controls" class="sticker-controls" style="visibility: hidden; margin-top:10px;">
                     <label style="color: #333; display: flex; align-items: center;">Size: <input type="range" id="scaleRange" min="0.5" max="3.5" step="0.1" value="2"></label>
                     <label style="color: #333; display: flex; align-items: center;">Rotate: <input type="range" id="rotateRange" min="-180" max="180" step="5" value="0"></label>
                     <button class="deleteStickerBtn" style="font-family: 'Roboto Slab', serif;" onclick="deleteCurrentSticker()">Delete</button>
@@ -558,14 +554,20 @@
                     rotation: 0
                 });
                 render();
+                document.getElementById('scaleRange').value = stickers[stickers.length-1].scale;
+                document.getElementById('rotateRange').value = stickers[stickers.length-1].rotation;
+                document.getElementById('sticker-controls').style.visibility = 'visible';
+                currentStickerIndex = stickers.length - 1;
             });
+            
         }
 
         function deleteCurrentSticker() {
             if (currentStickerIndex !== null) {
                 stickers.splice(currentStickerIndex, 1);
                 currentStickerIndex = null; // 清空選取
-                document.getElementById('sticker-controls').style.display = 'none'; 
+                // document.getElementById('sticker-controls').style.display = 'none'; 
+                document.getElementById('sticker-controls').style.visibility = 'hidden'; 
                 render();
             }
         }
@@ -682,7 +684,8 @@
                         currentStickerIndex = i;
                         dragStartX = mousePos.x - stickers[i].x;
                         dragStartY = mousePos.y - stickers[i].y;
-                        document.getElementById('sticker-controls').style.display = 'flex';
+                        // document.getElementById('sticker-controls').style.display = 'flex';
+                        document.getElementById('sticker-controls').style.visibility = 'visible';
                         document.getElementById('scaleRange').value = stickers[i].scale;
                         document.getElementById('rotateRange').value = stickers[i].rotation;
                         return;
@@ -690,14 +693,15 @@
                 }
 
                 currentStickerIndex = null;
-                document.getElementById('sticker-controls').style.display = 'none';
+                // document.getElementById('sticker-controls').style.display = 'none';
+                document.getElementById('sticker-controls').style.visibility = 'hidden';
             });
 
             document.addEventListener("mousedown", function(e){
                 // 檢查點擊目標是否在 canvas 或 sticker-controls 裡面
                 if (e.target !== canvas && !document.getElementById('sticker-controls').contains(e.target)) {
                     currentStickerIndex = null;
-                    document.getElementById('sticker-controls').style.display = 'none';
+                    document.getElementById('sticker-controls').style.visibility = 'hidden';
                 }
             });
 
